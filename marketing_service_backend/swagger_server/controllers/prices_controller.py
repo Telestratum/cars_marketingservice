@@ -22,6 +22,7 @@ from swagger_server import util
 cluster = MongoClient("localhost",27017)
 carDatabase = cluster.carDatabase
 car_price = carDatabase.car_price
+car_models = carDatabase.car_models
 
 logging.basicConfig(filename="newfile3.log",format="%(filename)s::%(levelname)s:%(message)s",level=logging.DEBUG)
 
@@ -39,22 +40,18 @@ def add_price(body=None):  # noqa: E501
     if connexion.request.is_json:
         # body = PriceInfo.from_dict(connexion.request.get_json())  # noqa: E501
         try:
-            if car_price.find_one({"model_id":body['model_id']}):
-                return "price already exist"
+            if car_models.find_one({"model_id":body['model_id']}):
+                if car_price.find_one({"model_id":body['model_id']}):
+                    return "price already exist",
+                else:
+                    body.update({"price_id" : (uuid.uuid4().hex)})
+                    data = car_price.insert_one(body)
+                    return "Car_model price created", 201
             else:
-                body.update({"price_id" : (uuid.uuid4().hex)})
-                data = car_price.insert_one(body)
-                return "Car_model price created", 201
-        except 401:
-            return "unauthorized", 401
-        except 403:
-            return "Forbidden", 403
-        except 404:
-            return "Not found", 404
-        except 503:
-            return "server unavailable", 503
+                return "model_id Not found",404
+
         except 500:
-            return "Internal server error",500
+            return "Internal_server_error",500
 
 
 def delete_price(price_id):  # noqa: E501
@@ -73,17 +70,10 @@ def delete_price(price_id):  # noqa: E501
             delete_user = car_price.delete_one({"price_id":price_id})
             return "successfully deleted",200
         else:
-            return "Price_id is not found", 200
-    except 401:
-            return "unauthorized", 401
-    except 403:
-        return "Forbidden", 403
-    except 404:
-        return "Not found", 404
-    except 503:
-        return "server unavailable", 503
+            return "Price_id is Not Found", 404
+    
     except:
-        return "Internal server error",500
+        return "Internal_server_error",500
 
 def get_price(price_id):  # noqa: E501
     """get_price
@@ -103,17 +93,11 @@ def get_price(price_id):  # noqa: E501
                 data_list.append(i)
                 return data_list,200
         else:
-            return "Price_id not exist"
-    except 401:
-        return "unauthorized", 401
-    except 403:
-        return "Forbidden", 403
-    except 404:
-        return "Not found", 404
-    except 503:
-        return "server unavailable", 503
+            return "Price_id Not exist",404
+    
     except:
-        return "Internal server error",500
+        return "Internal_server_error",500
+
 
 def get_prices():  # noqa: E501
     """get_prices
@@ -130,14 +114,6 @@ def get_prices():  # noqa: E501
             i["_id"]=str (i["_id"])
 
             data_list.append(i)
-        return data_list,200
-    except 401:
-        return "unauthorized", 401
-    except 403:
-        return "Forbidden", 403
-    except 404:
-        return "Not found", 404
-    except 503:
-        return "server unavailable", 503
+            return data_list,200
     except:
-        return "Inetrnal server error",500
+        return "Inetrnal_server_error",500
