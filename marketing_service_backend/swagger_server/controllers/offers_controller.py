@@ -40,21 +40,14 @@ def add_offer(body=None):  # noqa: E501
         # body = OfferInfo.from_dict(connexion.request.get_json())  # noqa: E501
         try:
             if car_offers.find_one({"applicable_models":body['applicable_models']}):
-                return "offer already exist"
+                return "offer already exist",401
             else:
                 body.update({"offer_id" : (uuid.uuid4().hex)})
-                data = car_offers.insert_one(body)
+                car_offers.insert_one(body)
                 return "Car_model offer created", 200
-        except 401:
-            return "unauthorized", 401
-        except 403:
-            return "Forbidden", 403
-        except 404:
-            return "Not found", 404
-        except 503:
-            return "server unavailable", 503
-        except 500:
-            return "Internal server error",500
+        except:
+            return "Internal_server_error",500
+
 
 
 
@@ -71,20 +64,12 @@ def delete_offer(offer_id):  # noqa: E501
     try:
         
         if car_offers.find_one({"offer_id":offer_id}):
-            delete_user = car_offers.delete_one({"offer_id":offer_id})
+            car_offers.delete_one({"offer_id":offer_id})
             return "successfully deleted",200
         else:
-            return "Offer_id is not found"
-    except 401:
-            return "unauthorized", 401
-    except 403:
-        return "Forbidden", 403
-    except 404:
-        return "Not found", 404
-    except 503:
-        return "server unavailable", 503
+            return "Offer_id is not found",404
     except:
-        return "Internal server error",500
+        return "Internal_server_error",500
 
 
 def get_offer_details():  # noqa: E501
@@ -103,16 +88,9 @@ def get_offer_details():  # noqa: E501
 
             data_list.append(i)
         return data_list,200
-    except 401:
-        return "unauthorized", 401
-    except 403:
-        return "Forbidden", 403
-    except 404:
-        return "Not found", 404
-    except 503:
-        return "server unavailable", 503
+
     except:
-        return "Inetrnal server error"
+        return "Inetrnal_server_error",500
 
 def update_offers(offer_id, body=None):  # noqa: E501
     """update_offers
@@ -132,13 +110,5 @@ def update_offers(offer_id, body=None):  # noqa: E501
             body = ast.literal_eval(json.dumps(request.get_json()))
             car_offers.update_many({"offer_id":offer_id},{"$set":body})
             return "successfully updated",200
-        except 401:
-            return "unauthorized", 401
-        except 403:
-            return "Forbidden", 403
-        except 404:
-            return "Not found", 404
-        except 503:
-            return "server unavailable", 503
         except:
-            return "Internal server error",500
+            return "Internal_server_error",500

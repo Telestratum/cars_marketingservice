@@ -36,25 +36,17 @@ def add_car_model(body=None):  # noqa: E501
     :rtype: Model201CarModelCreatedResponse
     """
     if connexion.request.is_json:
-        # body = Carmodelinfo.from_dict(connexion.request.get_json())  # noqa: E501
-        try:
-            # if car_models.find_one({"model_type":body['model_type']}):
-            #     return "model already exist"
+            # body = Carmodelinfo.from_dict(connexion.request.get_json())  # noqa: E501
+            try:
+                # if car_models.find_one({"model_type":body['model_type']}):
+                #     return "model already exist"
 
-            # else:
-                body.update({"model_id" : (uuid.uuid4().hex)})
-                data = car_models.insert_one(body)
-                return "Car model created", 200
-        except 401:
-            return "unauthorized", 401
-        except 403:
-            return "Forbidden", 403
-        except 404:
-            return "Not found", 404
-        except 503:
-            return "server unavailable", 503
-        except 500:
-            return "Internal server error",500
+                # else:
+                    body.update({"model_id" : (uuid.uuid4().hex)})
+                    data = car_models.insert_one(body)
+                    return "Car model created", 200
+            except:
+                return "Internal server error",500
 
 
 def get_car_models():  # noqa: E501
@@ -73,16 +65,9 @@ def get_car_models():  # noqa: E501
 
             data_list.append(i)
         return data_list,200
-    except 401:
-        return "unauthorized", 401
-    except 403:
-        return "Forbidden", 403
-    except 404:
-        return "Not found", 404
-    except 503:
-        return "server unavailable", 503
+    
     except:
-        return "Inetrnal server error"
+        return "Inetrnal_server_error",500
 
 
 
@@ -105,14 +90,7 @@ def get_car_modeltype(model_type):  # noqa: E501
                 data_list.append(i)
                 return data_list,200
         else:
-            return "modeltype not exist"
-    except 401:
-        return "unauthorized", 401
-    except 403:
-        return "Forbidden", 403
-    except 404:
-        return "Not found", 404
-    except 503:
-        return "server unavailable", 503
+            return "modeltype Not exist",404
+
     except:
-        return "Internal error",500
+        return "Internal_server_error",500
