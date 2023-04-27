@@ -531,10 +531,10 @@ components:
             type: string
     carmodelinfo:
       required:
-      - fuel_type
-      - model_name
       - model_type
+      - model_name
       - transmission
+      - fuel_type
       - trim
       type: object
       properties:
