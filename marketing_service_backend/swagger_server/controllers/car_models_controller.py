@@ -22,7 +22,7 @@ cluster = MongoClient("localhost",27017)
 carDatabase = cluster.carDatabase
 car_models = carDatabase.car_models
 
-logging.basicConfig(filename="newfile1.log",format="%(filename)s::%(levelname)s:%(message)s",level=logging.DEBUG)
+logging.basicConfig(filename="newfile1.log",format="%(filename)s:%(lineno)s:%(levelname)s:%(message)s",level=logging.DEBUG)
 
 
 def add_car_model(body=None):  # noqa: E501
@@ -37,17 +37,20 @@ def add_car_model(body=None):  # noqa: E501
     """
     if connexion.request.is_json:
             # body = Carmodelinfo.from_dict(connexion.request.get_json())  # noqa: E501
-            try:
-                # if car_models.find_one({"model_type":body['model_type']}):
-                #     return "model already exist"
-
-                # else:
-                    body.update({"model_id" : (uuid.uuid4().hex)})
-                    data = car_models.insert_one(body)
-                    return "Car model created", 200
-            except:
-                return "Internal server error",500
-
+            logging.debug(body)
+    # else:
+    #      return "Its not json format",503
+    try:
+        logging.debug("try block")
+        # carmodel_resut=car_models.find({"model_type":body['model_type']})
+        # if carmodel_resut:
+        logging.debug("inside else")
+        body.update({"model_id" : (uuid.uuid4().hex)})
+        car_models.insert_one(body)
+        return "Car model created", 200
+    except:
+        return "Internal_server_error",500
+    
 
 def get_car_models():  # noqa: E501
     """get_car_models
@@ -82,15 +85,20 @@ def get_car_modeltype(model_type):  # noqa: E501
     :rtype: Carmodeldetails
     """
     try:
-
-        data=car_models.find({"model_type":model_type})
-        data_list=[]
-        for i in data:
-                i["_id"]=str(i["_id"])
-                data_list.append(i)
-                return data_list,200
+        logging.debug(model_type)
+        carmodel_result = list(car_models.find({"model_type":model_type}))
+        logging.debug(carmodel_result)
+        if carmodel_result:
+            logging.debug("Inside if")
+            data_list=[]
+            for i in carmodel_result:
+                    logging.debug("Inside for")
+                    i["_id"]=str(i["_id"])
+                    data_list.append(i)
+            return data_list,200
+    
         else:
-            return "modeltype Not exist",404
+            return "Model_type Not Found",404
 
     except:
         return "Internal_server_error",500

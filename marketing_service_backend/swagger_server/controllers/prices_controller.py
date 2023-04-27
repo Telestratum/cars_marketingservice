@@ -24,7 +24,7 @@ carDatabase = cluster.carDatabase
 car_price = carDatabase.car_price
 car_models = carDatabase.car_models
 
-logging.basicConfig(filename="newfile3.log",format="%(filename)s::%(levelname)s:%(message)s",level=logging.DEBUG)
+logging.basicConfig(filename="newfile3.log",format="%(filename)s:%(lineno)s:%(levelname)s:%(message)s",level=logging.DEBUG)
 
 
 def add_price(body=None):  # noqa: E501
@@ -44,8 +44,9 @@ def add_price(body=None):  # noqa: E501
                 if car_price.find_one({"model_id":body['model_id']}):
                     return "price already exist",
                 else:
+                    car_models.update_many({"model_id":body['model_id']},{"$set":body})
                     body.update({"price_id" : (uuid.uuid4().hex)})
-                    data = car_price.insert_one(body)
+                    car_price.insert_one(body)
                     return "Car_model price created", 201
             else:
                 return "model_id Not found",404
@@ -67,7 +68,7 @@ def delete_price(price_id):  # noqa: E501
     try:
         
         if car_price.find_one({"price_id":price_id}):
-            delete_user = car_price.delete_one({"price_id":price_id})
+            car_price.delete_one({"price_id":price_id})
             return "successfully deleted",200
         else:
             return "Price_id is Not Found", 404
@@ -114,6 +115,6 @@ def get_prices():  # noqa: E501
             i["_id"]=str (i["_id"])
 
             data_list.append(i)
-            return data_list,200
+        return data_list,200
     except:
         return "Inetrnal_server_error",500
