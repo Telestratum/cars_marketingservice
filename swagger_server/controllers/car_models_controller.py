@@ -22,7 +22,7 @@ cluster = MongoClient("localhost",27017)
 carDatabase = cluster.carDatabase
 car_models = carDatabase.car_models
 
-logging.basicConfig(filename="newfile1.log",format="%(filename)s:%(lineno)s:%(levelname)s:%(message)s",level=logging.DEBUG)
+logging.basicConfig(filename="marketingfile.log",format="%(filename)s:%(lineno)s:%(levelname)s:%(message)s",level=logging.DEBUG)
 
 
 def add_car_model(body=None):  # noqa: E501

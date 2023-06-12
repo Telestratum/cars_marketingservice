@@ -24,7 +24,7 @@ carDatabase = cluster.carDatabase
 car_price = carDatabase.car_price
 car_models = carDatabase.car_models
 
-logging.basicConfig(filename="newfile3.log",format="%(filename)s:%(lineno)s:%(levelname)s:%(message)s",level=logging.DEBUG)
+logging.basicConfig(filename="marketingfile.log",format="%(filename)s:%(lineno)s:%(levelname)s:%(message)s",level=logging.DEBUG)
 
 
 def add_price(body=None):  # noqa: E501
