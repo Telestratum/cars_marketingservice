@@ -15,7 +15,7 @@ class OfferDetails(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, discount_pct: float=None, start_date: float=None, end_date: float=None, applicable_models: List[str]=None, offer_id: str=None):  # noqa: E501
+    def __init__(self, discount_pct: float=None, start_date: date=None, end_date: date=None, applicable_models: List[str]=None, offer_id: str=None):  # noqa: E501
         """OfferDetails - a model defined in Swagger
 
         :param discount_pct: The discount_pct of this OfferDetails.  # noqa: E501
@@ -31,8 +31,8 @@ class OfferDetails(Model):
         """
         self.swagger_types = {
             'discount_pct': float,
-            'start_date': float,
-            'end_date': float,
+            'start_date': date,
+            'end_date': date,
             'applicable_models': List[str],
             'offer_id': str
         }
@@ -85,7 +85,7 @@ class OfferDetails(Model):
         self._discount_pct = discount_pct
 
     @property
-    def start_date(self) -> float:
+    def start_date(self) -> date:
         """Gets the start_date of this OfferDetails.
 
 
@@ -95,7 +95,7 @@ class OfferDetails(Model):
         return self._start_date
 
     @start_date.setter
-    def start_date(self, start_date: float):
+    def start_date(self, start_date: date):
         """Sets the start_date of this OfferDetails.
 
 
@@ -108,7 +108,7 @@ class OfferDetails(Model):
         self._start_date = start_date
 
     @property
-    def end_date(self) -> float:
+    def end_date(self) -> date:
         """Gets the end_date of this OfferDetails.
 
 
@@ -118,7 +118,7 @@ class OfferDetails(Model):
         return self._end_date
 
     @end_date.setter
-    def end_date(self, end_date: float):
+    def end_date(self, end_date: date):
         """Sets the end_date of this OfferDetails.
 
 

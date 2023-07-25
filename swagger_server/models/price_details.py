@@ -15,7 +15,7 @@ class PriceDetails(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, model_id: str=None, price: float=None, start_date: str=None, end_date: str=None, price_id: str=None):  # noqa: E501
+    def __init__(self, model_id: str=None, price: float=None, start_date: date=None, end_date: date=None, price_id: str=None):  # noqa: E501
         """PriceDetails - a model defined in Swagger
 
         :param model_id: The model_id of this PriceDetails.  # noqa: E501
@@ -32,8 +32,8 @@ class PriceDetails(Model):
         self.swagger_types = {
             'model_id': str,
             'price': float,
-            'start_date': str,
-            'end_date': str,
+            'start_date': date,
+            'end_date': date,
             'price_id': str
         }
 
@@ -118,7 +118,7 @@ class PriceDetails(Model):
         return self._start_date
 
     @start_date.setter
-    def start_date(self, start_date: str):
+    def start_date(self, start_date: date):
         """Sets the start_date of this PriceDetails.
 
 
@@ -141,7 +141,7 @@ class PriceDetails(Model):
         return self._end_date
 
     @end_date.setter
-    def end_date(self, end_date: str):
+    def end_date(self, end_date: date):
         """Sets the end_date of this PriceDetails.
 
 

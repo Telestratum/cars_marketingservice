@@ -22,7 +22,7 @@ cluster = MongoClient("localhost",27017)
 carDatabase = cluster.carDatabase
 car_models = carDatabase.car_models
 
-logging.basicConfig(filename="marketingfile.log",format="%(filename)s:%(lineno)s:%(levelname)s:%(message)s",level=logging.DEBUG)
+logging.basicConfig(filename="/home/hari/Desktop/mahindra_carsservice/marketingfile.log",format="%(filename)s:%(lineno)s:%(levelname)s:%(message)s",level=logging.DEBUG)
 
 
 def add_car_model(body=None):  # noqa: E501
@@ -41,13 +41,16 @@ def add_car_model(body=None):  # noqa: E501
     # else:
     #      return "Its not json format",503
     try:
-        logging.debug("try block")
+        # logging.debug("try block")
         # carmodel_resut=car_models.find({"model_type":body['model_type']})
         # if carmodel_resut:
-        logging.debug("inside else")
-        body.update({"model_id" : (uuid.uuid4().hex)})
-        car_models.insert_one(body)
-        return "Car model created", 200
+        # logging.debug("inside else")
+        # if car_models.find_one({"model_type":body["model_type"]}):
+        #      return "Car Model Already created",400
+        # else:
+            body.update({"model_id" : (uuid.uuid4().hex)})
+            car_models.insert_one(body)
+            return "Car Model Created", 200
     except:
         return "Internal_server_error",500
     

@@ -14,7 +14,7 @@ class PriceInfo(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, model_id: str=None, price: float=None, start_date: str=None, end_date: str=None):  # noqa: E501
+    def __init__(self, model_id: str=None, price: float=None, start_date: date=None, end_date: date=None):  # noqa: E501
         """PriceInfo - a model defined in Swagger
 
         :param model_id: The model_id of this PriceInfo.  # noqa: E501
@@ -29,8 +29,8 @@ class PriceInfo(Model):
         self.swagger_types = {
             'model_id': str,
             'price': float,
-            'start_date': str,
-            'end_date': str
+            'start_date': date,
+            'end_date': date
         }
 
         self.attribute_map = {
@@ -102,7 +102,7 @@ class PriceInfo(Model):
         self._price = price
 
     @property
-    def start_date(self) -> str:
+    def start_date(self) -> date:
         """Gets the start_date of this PriceInfo.
 
 
@@ -112,7 +112,7 @@ class PriceInfo(Model):
         return self._start_date
 
     @start_date.setter
-    def start_date(self, start_date: str):
+    def start_date(self, start_date: date):
         """Sets the start_date of this PriceInfo.
 
 
@@ -125,7 +125,7 @@ class PriceInfo(Model):
         self._start_date = start_date
 
     @property
-    def end_date(self) -> str:
+    def end_date(self) -> date:
         """Gets the end_date of this PriceInfo.
 
 
@@ -135,7 +135,7 @@ class PriceInfo(Model):
         return self._end_date
 
     @end_date.setter
-    def end_date(self, end_date: str):
+    def end_date(self, end_date: date):
         """Sets the end_date of this PriceInfo.
 
 

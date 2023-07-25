@@ -14,7 +14,7 @@ class UpdateOfferInfo(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, key: str=None, value: str=None):  # noqa: E501
+    def __init__(self, key: str=None, value: any=None):  # noqa: E501
         """UpdateOfferInfo - a model defined in Swagger
 
         :param key: The key of this UpdateOfferInfo.  # noqa: E501
@@ -24,7 +24,7 @@ class UpdateOfferInfo(Model):
         """
         self.swagger_types = {
             'key': str,
-            'value': str
+            'value': any
         }
 
         self.attribute_map = {

@@ -14,7 +14,7 @@ class OfferInfo(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, discount_pct: float=None, start_date: float=None, end_date: float=None, applicable_models: List[str]=None):  # noqa: E501
+    def __init__(self, discount_pct: float=None, start_date: date=None, end_date: date=None, applicable_models: List[str]=None):  # noqa: E501
         """OfferInfo - a model defined in Swagger
 
         :param discount_pct: The discount_pct of this OfferInfo.  # noqa: E501
@@ -28,8 +28,8 @@ class OfferInfo(Model):
         """
         self.swagger_types = {
             'discount_pct': float,
-            'start_date': float,
-            'end_date': float,
+            'start_date': date,
+            'end_date': date,
             'applicable_models': List[str]
         }
 
@@ -79,7 +79,7 @@ class OfferInfo(Model):
         self._discount_pct = discount_pct
 
     @property
-    def start_date(self) -> float:
+    def start_date(self) -> date:
         """Gets the start_date of this OfferInfo.
 
 
@@ -89,7 +89,7 @@ class OfferInfo(Model):
         return self._start_date
 
     @start_date.setter
-    def start_date(self, start_date: float):
+    def start_date(self, start_date: date):
         """Sets the start_date of this OfferInfo.
 
 
@@ -102,22 +102,22 @@ class OfferInfo(Model):
         self._start_date = start_date
 
     @property
-    def end_date(self) -> float:
+    def end_date(self) -> date:
         """Gets the end_date of this OfferInfo.
 
 
         :return: The end_date of this OfferInfo.
-        :rtype: float
+        :rtype: date
         """
         return self._end_date
 
     @end_date.setter
-    def end_date(self, end_date: float):
+    def end_date(self, end_date: date):
         """Sets the end_date of this OfferInfo.
 
 
         :param end_date: The end_date of this OfferInfo.
-        :type end_date: float
+        :type end_date: date
         """
         if end_date is None:
             raise ValueError("Invalid value for `end_date`, must not be `None`")  # noqa: E501
